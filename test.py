@@ -1,7 +1,5 @@
 import re
 
-stri = "What is the capital of France? a) Paris b) Berlin c)london What is the capital of France? a) Paris b) Berlin c)london"
-
 question_word_list = [
     "what",
     "where",
@@ -21,7 +19,8 @@ question_word_list = [
     "may",
     "would",
     "will",
-    "should" "didn't",
+    "should",
+    "didn't",
     "doesn't",
     "haven't",
     "isn't",
@@ -35,36 +34,24 @@ question_word_list = [
 ]
 
 
-class q_c:
-
-    def set_question(self, question):
+class QuestionChoice:
+    def __init__(self, question, choices):
         self.question = question
-
-    def set_choice(self, choice):
-        self.choice = choice
-
-    def get_question(self, question):
-        return self.question
-
-    def get_choice(self, choice):
-        return self.choice
+        self.choices = choices
 
 
-q_c_list = []
+store = QuestionChoice()
 
-while stri != "":
-    if part := re.split(r"[\.\?]\s*", stri, 1) or any(
-        word in QUESTION_WORDS for word in stri
-    ):
-        obj_qc = q_c()
-        obj_qc.set_question(part[0])
-        if part := re.split(r"\[a-zA-Z]\[\.\)]", part[1], 1):
-            obj_qc.set_choice(part[0])
-        else:
-            obj_qc.set_choice("")
-    q_c_list.append(obj_qc)
+stri = "What is the capital of France? a) Paris b) Berlin c)london What is the capital of France? a) Paris b) Berlin c)london"
 
-    if len(part) < 0:
-        stri = part[1]
-    else:
-        stri = ""
+while stri:
+    text_words = stri.split()
+    if any(word.lower() in question_word_list for word in text_words):
+        question, sep, rest = stri.partition("?")
+        choices = re.findall(r"\b[a-z]\b", rest)
+        store.question = question.strip()
+        store.choices = choices
+    stri = rest.strip()
+
+print(store.question)
+print(store.choices)
