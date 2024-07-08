@@ -15,7 +15,7 @@ from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
 
 import re
 
-genai.configure(api_key="AIzaSyCYJ6DI0snwMnM305p5T4RS0FpsiA9xiFk")
+genai.configure(api_key="add your api here (gemmine api)")
 
 model = genai.GenerativeModel("gemini-pro")
 
